@@ -3,4 +3,4 @@ from .models import  testing_data_raw
 
 # Register your models here.
 
-admin.site.Register(testing_data_raw)
+admin.site.register(testing_data_raw)
