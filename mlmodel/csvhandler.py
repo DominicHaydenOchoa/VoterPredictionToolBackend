@@ -7,7 +7,7 @@ def process_training_data(df):
     age_dict = {"18-34": 1, "35-44": 2, "45-54": 3, "55-64": 4, "65-74": 5, "75-84": 6, "Over 85": 7}
     gender_dict = {"M": 1, "F": 2, "U": 3}
     party_dict = {"DEM": 1, "REP": 2, "LBT": 3, "GRN": 4, "OTH": 5}
-    temp_data = pd.DataFrame(data=data.sample(n=3000), columns=col_names)
+    temp_data = pd.DataFrame(data=data.sample(n=1900), columns=col_names)
     temp_ind = 1
     
     # convert values into int datatypes 
@@ -26,7 +26,7 @@ def process_training_data(df):
             df = df.sort_index()
     
     # output dataframe to csv
-    df.to_csv("C:/Users/Dominic/hevmREST/hevmREST/MLModel/processed_training_data.csv")
+    df.to_csv("C:/Users/Dominic/Documents/Capstone/HEVM/backend/MLModel/processed_training_data.csv")
 
 def generate_testing_data(df):
     
@@ -74,7 +74,7 @@ def prcoess_testing_data(df):
             df = df.sort_index()
     
     # output dataframe to csv
-    df.to_csv("C:/Users/Dominic/hevmREST/hevmREST/MLModel/processed_testing_data.csv")
+    df.to_csv("C:/Users/Dominic/Documents/Capstone/HEVM/backend/MLModel/processed_testing_data.csv")
 
 
 col_names = ['Id', 'Precinct', 'Congressional District', 'Age', 'Gender', 'Early Vote', 
@@ -87,7 +87,7 @@ col_names_test = ['Precinct', 'Congressional District', 'Age', 'Gender',
     'Party']
 
 # load unprocessed csv data
-data = pd.read_csv("C:/Users/Dominic/hevmREST/hevmREST/MLModel/Hispanic_Registration.csv",
+data = pd.read_csv("C:/Users/Dominic/Documents/Capstone/HEVM/backend/MLModel/Hispanic_Registration.csv",
     skiprows=1, names=col_names, header=None)
 
 # initialize data structure for processed data
