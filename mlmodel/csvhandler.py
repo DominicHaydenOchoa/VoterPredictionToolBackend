@@ -1,17 +1,41 @@
 import pandas as pd
+import numpy
+
+# generate raw training data for user breakdown
+def generate_training_data(df, df_empty):
+    
+    temp_ind = 1
+    
+    # convert values into int datatypes 
+    for index, row in df.iterrows():
+        
+        pct = row['Precinct']
+        cd = row['Congressional District']
+        age = row['Age']
+        gender = row['Gender']
+        early_vote = row["Early Vote"]
+        party = row['Party']
+
+        # append dataframe with correct amount of individual voters
+        for x in range(1, row['Amount']):
+            df_empty.loc[temp_ind] = [pct, cd, age, gender, early_vote, party]
+            temp_ind = temp_ind + 1
+            df_empty = df_empty.sort_index()
+    
+    # output dataframe to csv
+    df_empty.to_csv("C:/Users/Dominic/Documents/Capstone/HEVM/backend/mlmodel/training_data.csv")
 
 # process raw data into usable data for model training
-def process_training_data(df):
+def process_training_data(df, df_empty):
 
     ev_dict = {"Y": 1, "N": 0}
     age_dict = {"18-34": 1, "35-44": 2, "45-54": 3, "55-64": 4, "65-74": 5, "75-84": 6, "Over 85": 7}
     gender_dict = {"M": 1, "F": 2, "U": 3}
     party_dict = {"DEM": 1, "REP": 2, "LBT": 3, "GRN": 4, "OTH": 5}
-    temp_data = pd.DataFrame(data=data.sample(n=1900), columns=col_names)
     temp_ind = 1
     
     # convert values into int datatypes 
-    for index, row in temp_data.iterrows():
+    for index, row in df.iterrows():
         pct = int(row['Precinct'])
         cd = int(row['Congressional District'])
         age = age_dict[row['Age']]
@@ -21,20 +45,19 @@ def process_training_data(df):
 
         # append dataframe with correct amount of individual voters
         for x in range(1, row['Amount']):
-            df.loc[temp_ind] = [pct, cd, age, gender, ev, party]
+            df_empty.loc[temp_ind] = [pct, cd, age, gender, ev, party]
             temp_ind = temp_ind + 1
-            df = df.sort_index()
+            df_empty = df_empty.sort_index()
     
     # output dataframe to csv
-    df.to_csv("C:/Users/Dominic/Documents/Capstone/HEVM/backend/MLModel/processed_training_data.csv")
+    df_empty.to_csv("C:/Users/Dominic/Documents/Capstone/HEVM/backend/mlmodel/processed_training_data.csv")
 
-def generate_testing_data(df):
-    
-    temp_data = pd.DataFrame(data=data.sample(n=150), columns=col_names)
+def generate_testing_data(df, df_empty):
+
     temp_ind = 1
     
     # convert values into int datatypes 
-    for index, row in temp_data.iterrows():
+    for index, row in df.iterrows():
         pct = row['Precinct']
         cd = row['Congressional District']
         age = row['Age']
@@ -45,21 +68,22 @@ def generate_testing_data(df):
         for x in range(1, row['Amount']):
             df.loc[temp_ind] = [pct, cd, age, gender, party]
             temp_ind = temp_ind + 1
-            df = df.sort_index()
+            df_empty = df_empty.sort_index()
     
     # output dataframe to csv
-    df.to_csv("C:/Users/Dominic/hevmREST/hevmREST/MLModel/testing_data.csv")
+    df_empty.to_csv("C:/Users/Dominic/hevmREST/hevmREST/MLModel/testing_data.csv")
 
-def prcoess_testing_data(df):
+
+def process_testing_data(df, df_empty):
     
-    age_dict = {"18-34": 1, "35-44": 2, "45-54": 3, "55-64": 4, "65-74": 5, "75-84": 6, "Over 85": 7}
+    age_dict = {"18-34": 1, "35-44": 2, "45-54": 3, "55-64": 4, "65-74": 5, "75-84": 6, "Over 85": 7, "nan": 0}
     gender_dict = {"M": 1, "F": 2, "U": 3}
     party_dict = {"DEM": 1, "REP": 2, "LBT": 3, "GRN": 4, "OTH": 5}
-    temp_data = pd.DataFrame(data=data.sample(n=3000))
     temp_ind = 1
     
     # convert values into int datatypes 
-    for index, row in temp_data.iterrows():
+    for index, row in df.iterrows():
+        
         pct = int(row['Precinct'])
         cd = int(row['Congressional District'])
         print(row['Age'])
@@ -71,10 +95,10 @@ def prcoess_testing_data(df):
         for x in range(1, row['Amount']):
             df.loc[temp_ind] = [pct, cd, age, gender, party]
             temp_ind = temp_ind + 1
-            df = df.sort_index()
+            df_empty = df_empty.sort_index()
     
     # output dataframe to csv
-    df.to_csv("C:/Users/Dominic/Documents/Capstone/HEVM/backend/MLModel/processed_testing_data.csv")
+    df_empty.to_csv("C:/Users/Dominic/Documents/Capstone/HEVM/backend/MLModel/processed_testing_data.csv")
 
 
 col_names = ['Id', 'Precinct', 'Congressional District', 'Age', 'Gender', 'Early Vote', 
@@ -94,9 +118,12 @@ data = pd.read_csv("C:/Users/Dominic/Documents/Capstone/HEVM/backend/MLModel/His
 empty_train_data = pd.DataFrame(columns=col_names_proc)
 empty_test_data = pd.DataFrame(columns=col_names_test)
 
+df_train = pd.DataFrame(data=data.sample(n=1200))
+df_test = pd.DataFrame(data=data.sample(n=100))
 
 
 
-process_training_data(empty_train_data)
-# generate_testing_data(empty_test_data)
-# prcoess_testing_data(empty_test_data)
+generate_training_data(df_train, empty_train_data)
+process_training_data(df_train, empty_train_data)
+# generate_testing_data(df_test, empty_test_data)
+# prcoess_testing_data(df_test, empty_test_data)
