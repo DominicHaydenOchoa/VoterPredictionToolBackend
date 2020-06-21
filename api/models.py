@@ -1,4 +1,5 @@
 from django.db import models
+import random
 import csv
 # Create your models here.
 
@@ -17,6 +18,16 @@ class training_data_raw(models.Model):
     gender = models.CharField(max_length=1)
     early_vote = models.CharField(max_length=1)
     party = models.CharField(max_length=3)
+
+class testing_data_input(models.Model):
+    user_id = models.IntegerField()
+    precinct = models.IntegerField()
+    CD = models.IntegerField()
+    age = models.CharField(max_length=8)
+    gender = models.CharField(max_length=1)
+    early_vote = models.CharField(max_length=1)
+    party = models.CharField(max_length=3)
+
 
 def model_create_prompt():
     pass
