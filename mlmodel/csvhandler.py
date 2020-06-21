@@ -123,7 +123,7 @@ df_test = pd.DataFrame(data=data.sample(n=100))
 
 
 
-generate_training_data(df_train, empty_train_data)
-process_training_data(df_train, empty_train_data)
+# generate_training_data(df_train, empty_train_data)
+# process_training_data(df_train, empty_train_data)
 # generate_testing_data(df_test, empty_test_data)
 # prcoess_testing_data(df_test, empty_test_data)

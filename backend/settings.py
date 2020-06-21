@@ -37,6 +37,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'hevm-backend.herokuapp.com']
 
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240 # higher than the count of fields
+
 SITE_ID = 1
 
 # Application definition
