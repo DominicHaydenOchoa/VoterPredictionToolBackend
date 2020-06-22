@@ -1,9 +1,11 @@
 import pandas as pd
 import numpy as np
+from django.db import models
+from models import testing_data_raw
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 
-# read data from csv files
+"""# read data from csv files
 col_names_proc = ['Precinct', 'Congressional District', 'Age', 'Gender', 
     'Early Vote', 'Party']
 col_names_test = ['Precinct', 'Congressional District', 'Age', 'Gender', 'Party']
@@ -23,4 +25,4 @@ y_gnb = gnb.partial_fit(x_train, y_train, np.unique(y_train))
 results = gnb.predict_proba(x_test)[: , [1]]
 df_results = pd.DataFrame(data=results)
 print(results)
-testing_data['Early Vote Probability'] = df_results
+testing_data['Early Vote Probability'] = df_results"""

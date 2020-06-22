@@ -116,7 +116,7 @@ data = pd.read_csv("C:/Users/Dominic/Documents/Capstone/HEVM/backend/MLModel/His
 
 # initialize data structure for processed data
 empty_train_data = pd.DataFrame(columns=col_names_proc)
-empty_test_data = pd.DataFrame(columns=col_names_test)
+result_data = pd.DataFrame(columns=col_names_test)
 
 df_train = pd.DataFrame(data=data.sample(n=1200))
 df_test = pd.DataFrame(data=data.sample(n=100))
