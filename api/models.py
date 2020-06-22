@@ -16,7 +16,7 @@ class training_data_raw(models.Model):
     CD = models.IntegerField()
     age = models.CharField(max_length=8)
     gender = models.CharField(max_length=1)
-    early_vote = models.CharField(max_length=1)
+    early_vote = models.CharField(max_length=4)
     party = models.CharField(max_length=3)
 
 class testing_data_input(models.Model):
@@ -25,7 +25,7 @@ class testing_data_input(models.Model):
     CD = models.IntegerField()
     age = models.CharField(max_length=8)
     gender = models.CharField(max_length=1)
-    early_vote = models.CharField(max_length=1)
+    early_vote = models.CharField(max_length=4)
     party = models.CharField(max_length=3)
 
 

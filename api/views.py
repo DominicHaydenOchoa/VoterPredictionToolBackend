@@ -24,6 +24,24 @@ def testing_data_raw_list(request):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET', 'POST'])
+def testing_data_input_list(request):
+
+    if request.method == 'GET':
+        data = testing_data_input.objects.all()
+        serializer = testing_data_input_serializer(data, many=True)
+        return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        print(request.data)
+        serializer = testing_data_input_serializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET', 'POST', 'DELETE'])
 def testing_data_input_detail(request, user_id):
 
@@ -36,8 +54,7 @@ def testing_data_input_detail(request, user_id):
         serializer = testing_data_input_serializer(data) 
         return Response(serializer.data)
 
-    elif request.method =='PUT':
-        data = JSONParser().parse(request)
+    elif request.method =='POST':
         serializer = training_data_input_serializer(data=data)
 
         if serializer.is_valid():
@@ -48,7 +65,7 @@ def testing_data_input_detail(request, user_id):
     
     elif request.method == 'DELETE':
         data.delete()
-        return HttpResponse(status=204)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET', 'POST'])
 def training_data_raw_list(request):
