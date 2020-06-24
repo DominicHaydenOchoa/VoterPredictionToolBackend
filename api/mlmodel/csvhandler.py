@@ -62,16 +62,16 @@ def generate_testing_data(df, df_empty):
         cd = row['Congressional District']
         age = row['Age']
         gender = row['Gender']
+        ev = row['Early Vote']
         party = row['Party']
 
         # append dataframe with correct amount of individual voters
-        for x in range(1, row['Amount']):
-            df.loc[temp_ind] = [pct, cd, age, gender, party]
-            temp_ind = temp_ind + 1
-            df_empty = df_empty.sort_index()
+        df_empty.loc[temp_ind] = [pct, cd, age, gender, ev, party]
+        temp_ind = temp_ind + 1
+        df_empty = df_empty.sort_index()
     
     # output dataframe to csv
-    df_empty.to_csv("C:/Users/Dominic/hevmREST/hevmREST/MLModel/testing_data.csv")
+    df_empty.to_csv("C:/Users/Dominic/Documents/Capstone/HEVM/backend/api/csv/testing_data.csv")
 
 
 def process_testing_data(df, df_empty):
@@ -111,19 +111,19 @@ col_names_test = ['Precinct', 'Congressional District', 'Age', 'Gender',
     'Party']
 
 # load unprocessed csv data
-data = pd.read_csv("C:/Users/Dominic/Documents/Capstone/HEVM/backend/MLModel/Hispanic_Registration.csv",
+data = pd.read_csv("C:/Users/Dominic/Documents/Capstone/HEVM/backend/api/csv/hispanic_registration.csv",
     skiprows=1, names=col_names, header=None)
 
 # initialize data structure for processed data
 empty_train_data = pd.DataFrame(columns=col_names_proc)
-result_data = pd.DataFrame(columns=col_names_test)
+result_data = pd.DataFrame(columns=col_names_proc)
 
 df_train = pd.DataFrame(data=data.sample(n=1200))
-df_test = pd.DataFrame(data=data.sample(n=100))
+df_test = pd.DataFrame(data=data.sample(n=150))
 
 
 
 # generate_training_data(df_train, empty_train_data)
 # process_training_data(df_train, empty_train_data)
-# generate_testing_data(df_test, empty_test_data)
+generate_testing_data(df_test, result_data)
 # prcoess_testing_data(df_test, empty_test_data)

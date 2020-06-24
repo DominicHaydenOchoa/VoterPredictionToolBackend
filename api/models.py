@@ -3,15 +3,15 @@ import random
 import csv
 # Create your models here.
 
-
-class testing_data_raw(models.Model):
+class training_data(models.Model):
     precinct = models.IntegerField()
     CD = models.IntegerField()
     age = models.CharField(max_length=8)
     gender = models.CharField(max_length=1)
+    early_vote = models.CharField(max_length=8)
     party = models.CharField(max_length=3)
 
-class training_data_raw(models.Model):
+class testing_data(models.Model):
     precinct = models.IntegerField()
     CD = models.IntegerField()
     age = models.CharField(max_length=8)
@@ -20,7 +20,7 @@ class training_data_raw(models.Model):
     party = models.CharField(max_length=3)
 
 class testing_data_input(models.Model):
-    user_id = models.IntegerField()
+    session_id = models.IntegerField()
     precinct = models.IntegerField()
     CD = models.IntegerField()
     age = models.CharField(max_length=8)
@@ -28,29 +28,39 @@ class testing_data_input(models.Model):
     early_vote = models.CharField(max_length=8)
     party = models.CharField(max_length=3)
 
+class testing_data_result(models.Model):
+    session_id = models.IntegerField()
+    precinct = models.IntegerField()
+    CD = models.IntegerField()
+    age = models.CharField(max_length=8)
+    gender = models.CharField(max_length=1)
+    early_vote = models.CharField(max_length=8)
+    early_vote_score = models.CharField(max_length=8)
+    accuracy_result = models.CharField(max_length=1)
+    party = models.CharField(max_length=3)
 
 def model_create_prompt():
     pass
 
-def insert_testing_raw_model():
+def insert_testing_data():
     with open('C:/Users/Dominic/Documents/Capstone/HEVM/backend/api/csv/testing_data.csv') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            testing_data_raw.objects.create(
+            testing_data.objects.create(
             precinct = row['Precinct'],
             CD = row['Congressional District'],
             age = row['Age'],
             gender = row['Gender'],
-            party = row['Party'], )
+            early_vote = row['Early Vote'],
+            party = row['Party'], 
+        )
     
 
-
-
-def insert_training_data_raw():
+def insert_training_data():
     with open('C:/Users/Dominic/Documents/Capstone/HEVM/backend/api/csv/training_data.csv') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            training_data_raw.objects.create(
+            training_data.objects.create(
                 precinct = row['Precinct'],
                 CD = row['Congressional District'],
                 age = row['Age'],
@@ -59,4 +69,10 @@ def insert_training_data_raw():
                 party = row['Party'] 
         )
 
+"""ans = input("insert data?: ")
+if ans == "y":
+    insert_testing_data()
+    insert_training_data()
 
+else:
+    pass"""
