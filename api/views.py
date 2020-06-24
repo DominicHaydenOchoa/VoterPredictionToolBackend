@@ -4,8 +4,8 @@ import itertools
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
-from .models import testing_data, training_data, testing_data_input, testing_data_result
-from .serializers import testing_data_serializer, training_data_serializer, testing_data_input_serializer, testing_data_result_serializer
+from .models import testing_data, training_data, testing_data_input, testing_data_result, account
+from .serializers import testing_data_serializer, training_data_serializer, testing_data_input_serializer, testing_data_result_serializer, account_serializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -80,7 +80,6 @@ def naive_bayes_list(session_id):
 
     print("FINISHED")
     
-
 def create_result_list(results, session_id):
     data = testing_data.objects.all().values_list()
     df = pd.DataFrame(data=data, columns=col_names_input)
@@ -181,6 +180,17 @@ def process_testing_data_list():
         temp_ind = temp_ind + 1
 
     return df_result      
+
+@api_view(['GET'])
+def account_verif(request, username, password):
+    data = account.objects.filter(username=username, password=password)
+
+    if data.count() != 1:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+    
+    else:
+        return Response(status=status.HTTP_200_OK)
+
 
 @api_view(['GET', 'POST'])
 def testing_data_list(request):

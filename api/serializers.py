@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import testing_data, training_data, testing_data_input, testing_data_result
+from .models import testing_data, training_data, testing_data_input, testing_data_result, account
 
 class testing_data_serializer(serializers.ModelSerializer):
     class Meta:
@@ -21,3 +21,8 @@ class training_data_serializer(serializers.ModelSerializer):
     class Meta:
         model = training_data
         fields = ['precinct', 'CD', 'age', 'gender', 'early_vote', 'party']
+
+class account_serializer(serializers.ModelSerializer):
+    class Meta:
+        model = training_data
+        fields = ['username', 'password']

@@ -11,6 +11,10 @@ class training_data(models.Model):
     early_vote = models.CharField(max_length=8)
     party = models.CharField(max_length=3)
 
+class account(models.Model):
+    username = models.CharField(max_length=12)
+    password = models.CharField(max_length=16)
+
 class testing_data(models.Model):
     precinct = models.IntegerField()
     CD = models.IntegerField()
@@ -69,10 +73,12 @@ def insert_training_data():
                 party = row['Party'] 
         )
 
-"""ans = input("insert data?: ")
+"""ans = input("create account: ")
 if ans == "y":
-    insert_testing_data()
-    insert_training_data()
+    account.objects.create(
+        username = input("username: "),
+        password = input("password: ")
+    )
 
 else:
     pass"""
