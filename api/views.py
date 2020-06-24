@@ -182,7 +182,9 @@ def process_testing_data_list():
     return df_result      
 
 @api_view(['GET'])
-def account_verif(request, username, password):
+def account_verif(request):
+    username = request.GET.get('username')
+    password = request.GET.get('password')
     data = account.objects.filter(username=username, password=password)
 
     if data.count() != 1:
