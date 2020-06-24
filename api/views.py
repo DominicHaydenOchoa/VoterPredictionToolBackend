@@ -188,7 +188,7 @@ def account_verif(request):
     data = account.objects.filter(username=username, password=password)
 
     if data.count() != 1:
-        return Response(status=status.HTTP_401_UNAUTHORIZED)
+        return Response(status=status.HTTP_204_NO_CONTENT)
     
     else:
         return Response(status=status.HTTP_200_OK)
