@@ -275,11 +275,7 @@ def training_data_list(request):
 def testing_data_results_list(request):
     session_id = request.GET.get('sessionid')
 
-    if session_id == 0:
-        data = testing_data_result.objects.all()
-
-    else:
-        data = testing_data_result.objects.filter(session_id=session_id)
+    data = testing_data_result.objects.filter(session_id=session_id)
     
 
     if request.method == 'GET':
@@ -297,6 +293,26 @@ def testing_data_results_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        
+        data.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET', 'DELETE'])
+def testing_data_results_all(request):
+    session_id = request.GET.get('sessionid')
+
+    data = testing_data_result.objects.all()
+    
+
+    if request.method == 'GET':
+        
+        if data.count() == 0 and session_id != 0:
+            naive_bayes_list(session_id)
+
+        serializer = testing_data_result_serializer(data, many=True)
+        return Response(serializer.data)
     
     elif request.method == 'DELETE':
         
