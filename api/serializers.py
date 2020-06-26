@@ -26,8 +26,3 @@ class account_serializer(serializers.ModelSerializer):
     class Meta:
         model = training_data
         fields = ['username', 'password']
-
-class training_CD_count_serializer(serializers.ModelSerializer):
-    class Meta:
-        model = training_data
-        fields = ['CD', 'count']

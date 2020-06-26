@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from django.db.models import Count
 from rest_framework.parsers import JSONParser
 from .models import testing_data, training_data, testing_data_input, testing_data_result, account
-from .serializers import testing_data_serializer, training_data_serializer, testing_data_input_serializer, testing_data_result_serializer, account_serializer, training_CD_count_serializer 
+from .serializers import testing_data_serializer, training_data_serializer, testing_data_input_serializer, testing_data_result_serializer, account_serializer 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -324,8 +324,8 @@ def training_data_count(request):
     key = request.GET.get('key')
     
     if request.method == 'GET':
-        data = list(training_data.objects.values(key).annotate(Count(key)))
-        ev_data = list(training_data.objects.filter(early_vote="Y").values(key).annotate(Count(key)))
+        data = list(training_data.objects.values(key).annotate(Count(key)).order_by(key))
+        ev_data = list(training_data.objects.filter(early_vote="Y").values(key).annotate(Count(key)).order_by(key))
         
         for i in range(0, len(data)):
             try:
@@ -344,8 +344,8 @@ def testing_data_count(request):
     key = request.GET.get('key')
     
     if request.method == 'GET':
-        data = list(testing_data.objects.values(key).annotate(Count(key)))
-        ev_data = list(testing_data.objects.filter(early_vote="Y").values(key).annotate(Count(key)))
+        data = list(testing_data.objects.values(key).annotate(Count(key)).order_by(key))
+        ev_data = list(testing_data.objects.filter(early_vote="Y").values(key).annotate(Count(key)).order_by(key))
         
         for i in range(0, len(data)):
             try:
@@ -365,8 +365,8 @@ def testing_data_results_count(request):
     key = request.GET.get('key')
     
     if request.method == 'GET':
-        data = list(testing_data_result.objects.filter(session_id=session_id).values(key).annotate(Count(key)))
-        ev_data = list(testing_data_result.objects.filter(session_id= session_id, early_vote="Y").values(key).annotate(Count(key)))
+        data = list(testing_data_result.objects.filter(session_id=session_id).values(key).annotate(Count(key)).order_by(key))
+        ev_data = list(testing_data_result.objects.filter(session_id= session_id, early_vote="Y").values(key).annotate(Count(key)).order_by(key))
         
         for i in range(0, len(data)):
             try:

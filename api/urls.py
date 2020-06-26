@@ -11,6 +11,7 @@ urlpatterns = [
     path('training_data/', training_data_list),
     path('testing_data_results/', testing_data_results_list),
     path('training_data_count/', training_data_count),
+    path('testing_data_count/', testing_data_count),
     path('testing_data_results_count/', testing_data_results_count),
     path('testing_data_results_all/', testing_data_results_all),
 
