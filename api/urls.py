@@ -7,7 +7,6 @@ urlpatterns = [
     path('login/', account_verif),
     path('testing_data/', testing_data_list),
     path('testing_data_input/', testing_data_input_list),
-    path('testing_data_input/<int:user_id>/', testing_data_input_detail),
     path('training_data/', training_data_list),
     path('testing_data_results/', testing_data_results_list),
     path('training_data_count/', training_data_count),

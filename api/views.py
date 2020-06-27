@@ -194,7 +194,6 @@ def account_verif(request):
     else:
         return Response(status=status.HTTP_200_OK)
 
-
 @api_view(['GET', 'POST'])
 def testing_data_list(request):
 
@@ -211,7 +210,7 @@ def testing_data_list(request):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'DELETE'])
 def testing_data_input_list(request):
     print(request.data)
     if request.method == 'GET':
@@ -228,21 +227,43 @@ def testing_data_input_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        try:
+            data = testing_data_input.objects.all()
+        except: 
+            testing_data_input.DoesNotExist(status=404)
+            serializer = testing_data_input_serializer(data)
+
+        data.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET', 'POST', 'DELETE'])
-def testing_data_input_detail(request, user_id):
-
-    try:
-        data = testing_data_input.objects.get(user_id=user_id)
-    except: 
-        testing_data_input.DoesNotExist(status=404)
+def testing_data_input_detail(request):
 
     if request.method == 'GET':
-        serializer = testing_data_input_serializer(data) 
+        session_id = request.GET.get('session_id')
+
+        try:
+            data = testing_data_input.objects.get(session_id=sesssion_id)
+        except: 
+            testing_data_input.DoesNotExist(status=404)
+            serializer = testing_data_input_serializer(data)
+        
+        serializer = testing_data_input_serializer(data=data)
+
         return Response(serializer.data)
 
     elif request.method =='POST':
-        serializer = training_data_input_serializer(data=data)
+        session_id = request.POST.get()
+
+        try:
+            data = testing_data_input.objects.get(session_id=sesssion_id)
+        except: 
+            testing_data_input.DoesNotExist(status=404)
+            serializer = testing_data_input_serializer(data)
+
+        serializer = testing_data_input_serializer(data=data)
 
         if serializer.is_valid():
             naive_bayes(user_id)
@@ -252,6 +273,12 @@ def testing_data_input_detail(request, user_id):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'DELETE':
+        try:
+            data = testing_data_input.objects.get(session_id=sesssion_id)
+        except: 
+            testing_data_input.DoesNotExist(status=404)
+            serializer = testing_data_input_serializer(data)
+
         data.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
