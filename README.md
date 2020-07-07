@@ -1,8 +1,8 @@
-# Python: Getting Started
+## At A Glance
 
-A barebones Django app, which can easily be deployed to Heroku.
+This is a Django Based REST API for a voter prediction tool that can be accessed here: [LINK](hevm-frontend.herokuapp.com/#/)
 
-This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
+The application uses machine learning to predict voter behavior. The libraries used are Scikit-Learn, Pandas, and Numpy for the analysis. All underlying data is stored in a Postgres database. 
 
 ## Running Locally
 
